@@ -1,0 +1,619 @@
+<!doctype html>
+<html>
+<head vocab="http://schema.org/" typeof="WebPage">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="name" content="CSS Text Level 3 Example" />
+<title>CSS Text Level 3 Example</title>
+<meta property="datepublished" content="2013-10-23" />
+<meta property="creator" content="中口誠, Makoto Nakaguchi" />
+<meta property="keywords" content="CSS3, Text Level3, 実例, Example" />
+<meta property="description" content="CSS Text Level3の実装例です。webkit、chrome canary, Firefox Nightlyなどの開発版ブラウザで確認することができます。" />
+
+<style>
+html { font-size: 85%; background: #f7f6f4; }
+body {	margin: 5rem }
+article { margin: 5rem 0 }
+section { margin: 2rem 0 4rem 0 }
+h1 { font-size: 3.0rem }
+h2 { font-size: 2.0rem }
+h3 { font-size: 1.5rem }
+p { margin: 0.5rem 0 1.5rem 0; line-height: 1.75rem }
+i { font-style: normal; font-weight: bold }
+a { text-underline-position: under; text-decoration-style: wavy }
+h1,h2,h3 { margin: 0.5rem 0; font-weight: normal; color: #5f5f5f }
+h1 a { color: #5f5f5f }
+ul, dl { margin: 1rem 0 }
+#vid {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+}
+
+.txtTrans_capitalize { text-transform: capitalize }
+.txtTrans_uppercase { text-transform: uppercase }
+.txtTrans_lowercase { text-transform: lowercase }
+.txtTrans_fullwidth {
+  text-transform: -o-full-width;
+  text-transform: -ms-full-width;
+  text-transform: -moz-full-width;
+  text-transform: -webkit-full-width;
+  text-transform: full-width
+}
+
+.ws_normal { white-space: normal }
+.ws_pre { white-space: pre }
+.ws_nowrap  { white-space: nowrap }
+.ws_prewap { white-space: pre-wrap }
+.ws_preline { white-space: pre-line }
+
+.lb_auto { line-break: auto }
+.lb_loose { line-break: loose }
+.lb_normal { line-break: normal }
+.lb_strict { line-break: strict }
+
+.Wb_normal { word-break: normal }
+.Wb_keepall { word-break:keep-all }
+.Wb_breakall { word-break: break-all }
+
+.hc_manual { hyphens: manual }
+.hc_auto { hyphens: auto }
+
+#breakword { overflow-wrap/word-wrap: break-word }
+
+.align_justify p { width: 40rem }
+#ta_end { text-align: end }
+#ta_left { text-align: left }
+#ta_right { text-align: right }
+#ta_center { text-align: center }
+#ta_justify { text-align: justify }
+#ta_matchparent {
+  text-transform: -o-match-parent;
+  text-transform: -ms-match-parent;
+  text-transform: -moz-match-parent;
+  text-transform: -webkit-match-parent;
+  text-align: match-parent
+}
+#ta_startend {
+  text-align: -o-start end;
+  text-align: -ms-start end;
+  text-align: -moz-start end;
+  text-align: -webkit-start end;
+  text-align: start end
+}
+
+#tal_auto { text-align-last: auto }
+#tal_start { text-align-last: start }
+#tal_end { text-align-last: end }
+#tal_left { text-align-last: left }
+#tal_right { text-align-last: right }
+#tal_center { text-align-last: center }
+#tal_justify { text-align-last: justify }
+
+#tj_auto { text-justify: auto }
+#tj_interword {
+  text-justify: -o-inter-word;
+  text-justify: -ms-inter-word;
+  text-justify: -moz-inter-word;
+  text-justify: -webkit-inter-word;
+  text-justify: inter-word
+}
+#tj_distribute {
+  text-justify: -o-distribute;
+  text-justify: -ms-distribute;
+  text-justify: -moz-distribute;
+  text-justify: -webkit-distribute;
+  text-justify: distribute
+}
+
+#ws_length { word-spacing: 1em }
+#ws_percentage { word-spacing: 100% }
+
+#ls_length { letter-spacing: 0.5rem }
+
+#ti_length { text-indent: 1rem }
+#ti_percentage { text-indent: -2.5% }
+#ti_eachline {
+  text-indent: -o-each-line;
+  text-indent: -ms-each-line;
+  text-indent: -moz-each-line;
+  text-indent: -webkit-each-line;
+  text-indent: each-line
+}
+#ti_hanging {
+  text-indent: -o-hanging;
+  text-indent: -ms-hanging;
+  text-indent: -moz-hanging;
+  text-indent: -webkit-hanging;
+  text-indent: hanging
+}
+
+#hp_first {
+  -o-hanging-punctuation: first;
+  -ms-hanging-punctuation: first;
+  -moz-hanging-punctuation: first;
+  -webkit-hanging-punctuation: first;
+  hanging-punctuation: first
+}
+#hp_forceend {
+  -o-hanging-punctuation: force-end;
+  -ms-hanging-punctuation: force-end;
+  -moz-hanging-punctuation: force-end;
+  -webkit-hanging-punctuation: force-end;
+  hanging-punctuation: force-end
+}
+#hp_allow-end {
+  -o-hanging-punctuation: allow-end;
+  -ms-hanging-punctuation: allow-end;
+  -moz-hanging-punctuation: allow-end;
+  -webkit-hanging-punctuation: allow-end;
+  hanging-punctuation: allow-end
+}
+#hp_last {
+  -o-hanging-punctuation: last;
+  -ms-hanging-punctuation: last;
+  -moz-hanging-punctuation: last;
+  -webkit-hanging-punctuation: last;
+  hanging-punctuation: last
+}
+#hp_multi {
+  -o-hanging-punctuation: first force-end last;
+  -ms-hanging-punctuation: first force-end last;
+  -moz-hanging-punctuation: first force-end last;
+  -webkit-hanging-punctuation: first force-end last;
+  hanging-punctuation: first force-end last
+}
+
+</style>
+</head>
+<body>
+<h1>CSS Text Module Level 3 Exmple</h1>
+<article>
+
+<section>
+<h2>Transforming Text</h2>
+<section>
+<h3><i>text-transform</i> property</h3>
+<dl>
+<dt>none</dt>
+<dd>
+<p>srcset属性よりもpicture要素のほうが、冗長なんだけどわかりすいところがいい。imageset要素でimg要素を内包して、img要素の属性にデバイスピクセル比とかviewportサイズとかを指定できるようにしてくれないかなあ。　#html</p>
+</dd>
+</dl>
+
+<dl>
+<dt>capitalize</dt>
+<dd>
+<p class="txtTrans_capitalize">srcset属性よりもpicture要素のほうが、冗長なんだけどわかりすいところがいい。imageset要素でimg要素を内包して、img要素の属性にデバイスピクセル比とかviewportサイズとかを指定できるようにしてくれないかなあ。　#html</p>
+</dd>
+</dl>
+
+<dl>
+<dt>uppercase</dt>
+<dd>
+<p class="txtTrans_uppercase">srcset属性よりもpicture要素のほうが、冗長なんだけどわかりすいところがいい。imageset要素でimg要素を内包して、img要素の属性にデバイスピクセル比とかviewportサイズとかを指定できるようにしてくれないかなあ。　#html</p>
+</dd>
+</dl>
+
+<dl>
+<dt>lowercase</dt>
+<dd>
+<p class="txtTrans_lowercase">srcset属性よりもpicture要素のほうが、冗長なんだけどわかりすいところがいい。imageset要素でimg要素を内包して、img要素の属性にデバイスピクセル比とかviewportサイズとかを指定できるようにしてくれないかなあ。　#html</p>
+</dd>
+</dl>
+
+<dl>
+<dt>full-width</dt>
+<dd>
+<p class="txtTrans_fullwidth">srcset属性よりもpicture要素のほうが、冗長なんだけどわかりすいところがいい。imageset要素でimg要素を内包して、img要素の属性にデバイスピクセル比とかviewportサイズとかを指定できるようにしてくれないかなあ。　#html</p>
+<p class="txtTrans_fullwidth">CSS ShapesのWD仕様をもとに実装具合を検証中。今までの矩形ボックス配置にくらべて格段にビジュアル表現ができるようになりつつあるね。 #css http://makotonakaguchi.github.io/css_shapes/</p>
+<p class="txtTrans_fullwidth">CSS Text Module Level 3がLast Callになってる。美しくかつ気持ちの良い文字組に少しずつ近づいているのはありがたいことだ。どうせなら初期値でやってもらいたいくらいだ。</p>
+<p class="txtTrans_fullwidth">今まで作ってたHTMLを　Google Web Designer で開こうと思ったら、エラーが出る。調べてみたら、このツールで作成したよっていうメタ情報がコードにあった。ドリとかBracketsとかを使ってるかたはmeta要素にコードを追加するといいよ。</p>
+</dd>
+</dl>
+</section>
+</section>
+
+<section>
+<h2>White Space and Wrapping: <i>white-space</i> property</h2>
+<section>
+<dl>
+<dt>normal</dt>
+<dd>
+<p class="ws_normal">CSS ShapesのWD仕様をもとに実装具合を検証中。今までの矩形ボックス配置にくらべて格段にビジュアル表現ができるようになりつつあるね。 #css http://makotonakaguchi.github.io/css_shapes/</p>
+</dd>
+</dl>
+
+<dl>
+<dt>pre</dt>
+<dd>
+<p class="ws_pre">CSS ShapesのWD仕様をもとに実装具合を検証中。今までの矩形ボックス配置にくらべて格段にビジュアル表現ができるようになりつつあるね。 #css http://makotonakaguchi.github.io/css_shapes/</p>
+</dd>
+</dl>
+
+<dl>
+<dt>nowrap</dt>
+<dd>
+<p class="ws_nowrap">CSS ShapesのWD仕様をもとに実装具合を検証中。今までの矩形ボックス配置にくらべて格段にビジュアル表現ができるようになりつつあるね。 #css http://makotonakaguchi.github.io/css_shapes/</p>
+</dd>
+</dl>
+
+<dl>
+<dt>pre-wrap</dt>
+<dd>
+<p class="ws_prewrap">CSS ShapesのWD仕様をもとに実装具合を検証中。今までの矩形ボックス配置にくらべて格段にビジュアル表現ができるようになりつつあるね。 #css http://makotonakaguchi.github.io/css_shapes/</p>
+</dd>
+</dl>
+
+<dl>
+<dt>pre-line</dt>
+<dd>
+<p class="ws_preline">CSS ShapesのWD仕様をもとに実装具合を検証中。今までの矩形ボックス配置にくらべて格段にビジュアル表現ができるようになりつつあるね。 #css http://makotonakaguchi.github.io/css_shapes/</p>
+</dd>
+</dl>
+</section>
+</section>
+
+<section>
+<h2>Line Breaking and Word Boundaries</h2>
+<section>
+<h3><i>line-break</i> property</h3>
+<dl>
+<dt>auto</dt>
+<dd>
+<p class="lb_auto">CSS Text Module Level 3がLast Callになってる。美しくかつ気持ちの良い文字組に少しずつ近づいているのはありがたいことだ。どうせなら初期値でやってもらいたいくらいだ。</p>
+</dd>
+</dl>
+
+<dl>
+<dt>loose</dt>
+<dd>
+<p class="lb_loose">CSS Text Module Level 3がLast Callになってる。美しくかつ気持ちの良い文字組に少しずつ近づいているのはありがたいことだ。どうせなら初期値でやってもらいたいくらいだ。</p>
+</dd>
+</dl>
+
+<dl>
+<dt>normal</dt>
+<dd>
+<p class="lb_normal">CSS Text Module Level 3がLast Callになってる。美しくかつ気持ちの良い文字組に少しずつ近づいているのはありがたいことだ。どうせなら初期値でやってもらいたいくらいだ。</p>
+</dd>
+</dl>
+
+<dl>
+<dt>strict</dt>
+<dd>
+<p class="lb_strict">CSS Text Module Level 3がLast Callになってる。美しくかつ気持ちの良い文字組に少しずつ近づいているのはありがたいことだ。どうせなら初期値でやってもらいたいくらいだ。</p>
+</dd>
+</dl>
+</section>
+
+<section>
+<h3><i>word-break</i> prvoperty</h3>
+<dl>
+<dt>normal</dt>
+<dd>
+<p class="Wb_normal">今まで作ってたHTMLをGoogle Web Designer で開こうと思ったら、エラーが出る。調べてみたら、このツールで作成したよっていうメタ情報がコードにあった。ドリとかBracketsとかを使ってるかたはmeta要素にコードを追加するといいよ。</p>
+</dd>
+</dl>
+
+<dl>
+<dt>keep-all</dt>
+<dd>
+<p class="Wb_keepall">今まで作ってたHTMLをGoogle Web Designer で開こうと思ったら、エラーが出る。調べてみたら、このツールで作成したよっていうメタ情報がコードにあった。ドリとかBracketsとかを使ってるかたはmeta要素にコードを追加するといいよ。</p>
+</dd>
+</dl>
+
+<dl>
+<dt>break-all</dt>
+<dd>
+<p class="Wb_breakall">今まで作ってたHTMLをGoogle Web Designer で開こうと思ったら、エラーが出る。調べてみたら、このツールで作成したよっていうメタ情報がコードにあった。ドリとかBracketsとかを使ってるかたはmeta要素にコードを追加するといいよ。</p>
+</dd>
+</dl>
+</section>
+
+<h2>Breaking Within Words</h2>
+<section>
+<h3><i>hyphens</i> property</h3>
+<dl>
+<dt>manual</dt>
+<dd>
+<p class="hc_manual">In Unicode, U+00AD is a conditional "soft hyphen" and U+2010 is an unconditional hyphen. Unicode Standard Annex #14 describes the role of soft hyphens in Unicode line breaking. [UAX14] In HTML, &shy; represents the soft hyphen character which suggests a hyphenation opportunity.</p>
+</dd>
+</dl>
+
+<dl>
+<dt>auto</dt>
+<dd>
+<p class="hc_auto">Words may be broken at appropriate hyphenation points either as determined by hyphenation characters inside the word or as determined automatically by a language-appropriate hyphenation resource. Conditional hyphenation characters inside a word, if present, take priority over automatic resources when determining hyphenation opportunities within the word.</p>
+</dd>
+</dl>
+</section>
+
+<section>
+<h3><i>overflow-wrap / word-wrap</i> property</h3>
+<dl>
+<dt>break-word</dt>
+<dd>
+<p id="breakword">In Unicode, U+00AD is a conditional "soft hyphen" and U+2010 is an unconditional hyphen. Unicode Standard Annex #14 describes the role of soft hyphens in Unicode line breaking. [UAX14] In HTML, &shy; represents the soft hyphen character which suggests a hyphenation opportunity.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+<section>
+<h2>Alignment and Justification</h2>
+<section class="align_justify">
+<h3><i>text-align</i> property</h3>
+<dl>
+<dt>start</dt>
+<dd>
+<p>A block of text is a stack of line boxes. This property specifies how the inline-level boxes within each line box align with respect to the start and end sides of the line box. Alignment is not with respect to the viewport or containing block.</p>
+</dd>
+</dl>
+
+<dl>
+<dt>end</dt>
+<dd>
+<p id="ta_end">A block of text is a stack of line boxes. This property specifies how the inline-level boxes within each line box align with respect to the start and end sides of the line box. Alignment is not with respect to the viewport or containing block.</p>
+</dd>
+</dl>
+
+<dl>
+<dt>left</dt>
+<dd>
+<p id="ta_left">A block of text is a stack of line boxes. This property specifies how the inline-level boxes within each line box align with respect to the start and end sides of the line box. Alignment is not with respect to the viewport or containing block.</p>
+</dd>
+</dl>
+
+<dl>
+<dt>right</dt>
+<dd>
+<p id="ta_right">A block of text is a stack of line boxes. This property specifies how the inline-level boxes within each line box align with respect to the start and end sides of the line box. Alignment is not with respect to the viewport or containing block.</p>
+</dd>
+</dl>
+
+<dl>
+<dt>center</dt>
+<dd>
+<p id="ta_center">A block of text is a stack of line boxes. This property specifies how the inline-level boxes within each line box align with respect to the start and end sides of the line box. Alignment is not with respect to the viewport or containing block.</p>
+</dd>
+</dl>
+
+<dl>
+<dt>justify</dt>
+<dd>
+<p id="ta_justify">A block of text is a stack of line boxes. This property specifies how the inline-level boxes within each line box align with respect to the start and end sides of the line box. Alignment is not with respect to the viewport or containing block.</p>
+</dd>
+</dl>
+
+<dl>
+<dt>match-parent</dt>
+<dd>
+<p id="ta_matchparent">A block of text is a stack of line boxes. This property specifies how the inline-level boxes within each line box align with respect to the start and end sides of the line box. Alignment is not with respect to the viewport or containing block.</p>
+</dd>
+</dl>
+
+<dl>
+<dt>start end</dt>
+<dd>
+<p id="ta_startend">A block of text is a stack of line boxes. This property specifies how the inline-level boxes within each line box align with respect to the start and end sides of the line box. Alignment is not with respect to the viewport or containing block.</p>
+</dd>
+</dl>
+</section>
+
+<section class="align_justify">
+<h3><i>text-align-last</i> property</h3>
+<dl>
+<dt>auto</dt>
+<dd>
+<p id="tal_auto">A block of text is a stack of line boxes. This property specifies how the inline-level boxes within each line box align with respect to the start and end sides of the line box. Alignment is not with respect to the viewport or containing block.</p>
+</dd>
+</dl>
+
+<dl>
+<dt>start</dt>
+<dd>
+<p id="tal_start">A block of text is a stack of line boxes. This property specifies how the inline-level boxes within each line box align with respect to the start and end sides of the line box. Alignment is not with respect to the viewport or containing block.</p>
+</dd>
+</dl>
+
+<dl>
+<dt>end</dt>
+<dd>
+<p id="tal_end">A block of text is a stack of line boxes. This property specifies how the inline-level boxes within each line box align with respect to the start and end sides of the line box. Alignment is not with respect to the viewport or containing block.</p>
+</dd>
+</dl>
+
+<dl>
+<dt>left</dt>
+<dd>
+<p id="tal_left">A block of text is a stack of line boxes. This property specifies how the inline-level boxes within each line box align with respect to the start and end sides of the line box. Alignment is not with respect to the viewport or containing block.</p>
+</dd>
+</dl>
+
+<dl>
+<dt>right</dt>
+<dd>
+<p id="tal_right">A block of text is a stack of line boxes. This property specifies how the inline-level boxes within each line box align with respect to the start and end sides of the line box. Alignment is not with respect to the viewport or containing block.</p>
+</dd>
+</dl>
+
+<dl>
+<dt>center</dt>
+<dd>
+<p id="tal_center">A block of text is a stack of line boxes. This property specifies how the inline-level boxes within each line box align with respect to the start and end sides of the line box. Alignment is not with respect to the viewport or containing block.</p>
+</dd>
+</dl>
+
+<dl>
+<dt>justify</dt>
+<dd>
+<p id="tal_justify">A block of text is a stack of line boxes. This property specifies how the inline-level boxes within each line box align with respect to the start and end sides of the line box. Alignment is not with respect to the viewport or containing block.</p>
+</dd>
+</dl>
+</section>
+
+<section class="align_justify">
+<h3><i>text-justify</i> property</h3>
+<dl>
+<dt>auto</dt>
+<dd>
+<p id="tj_auto">Webで容易に複雑なレイアウトがデザインできるようになるのはまだ先で今それを実現するにはJavaScriptや一枚ものの画像にする必要がある。今でもできるじゃん。って思えるかもしれないがこれでは情報へのアクセスと伝えるインターフェースという点で不十分。</p>
+</dd>
+</dl>
+
+<dl>
+<dt>inter-word</dt>
+<dd>
+<p id="tj_interword">Webで容易に複雑なレイアウトがデザインできるようになるのはまだ先で今それを実現するにはJavaScriptや一枚ものの画像にする必要がある。今でもできるじゃん。って思えるかもしれないがこれでは情報へのアクセスと伝えるインターフェースという点で不十分。</p>
+</dd>
+</dl>
+
+<dl>
+<dt>distribute</dt>
+<dd>
+<p id="tj_distribute">Webで容易に複雑なレイアウトがデザインできるようになるのはまだ先で今それを実現するにはJavaScriptや一枚ものの画像にする必要がある。今でもできるじゃん。って思えるかもしれないがこれでは情報へのアクセスと伝えるインターフェースという点で不十分。</p>
+</dd>
+</dl>
+</section>
+</section>
+
+<section>
+<h2>Spacing</h2>
+<section class="align_justify">
+<h3><i>word-spacing</i> property</h3>
+<dl>
+<dt>normal</dt>
+<dd>
+<p>Additional spacing is applied to each word separator left in the text after the white space processing rules have been applied, and should be applied half on each side of the character unless otherwise dictated by typographic tradition.</p>
+</dd>
+</dl>
+
+<dl>
+<dt>&lang;length&rang;</dt>
+<dd>
+<p id="ws_length">Additional spacing is applied to each word separator left in the text after the white space processing rules have been applied, and should be applied half on each side of the character unless otherwise dictated by typographic tradition.</p>
+</dd>
+</dl>
+
+<dl>
+<dt>&lang;percentage&rang;</dt>
+<dd>
+<p id="ws_percentage">Additional spacing is applied to each word separator left in the text after the white space processing rules have been applied, and should be applied half on each side of the character unless otherwise dictated by typographic tradition.</p>
+</dd>
+</dl>
+</section>
+
+<section class="align_justify">
+<h3><i>letter-spacing</i> property</h3>
+<dl>
+<dt>normal</dt>
+<dd>
+<p>CSS Shapesのカスタム形状ボックスに合わせて線と塗りを適用できればいいなあ。と思っているが、それはbackgroundやimg、SVGで表現してくれってことだな。矩形でない形状を浮動化できるようにすること、Regionsとともに複雑なレイアウトを実現させることが目的か。</p>
+</dd>
+</dl>
+
+<dl>
+<dt>&lang;length&rang;</dt>
+<dd>
+<p id="ls_length">CSS Shapesのカスタム形状ボックスに合わせて線と塗りを適用できればいいなあ。と思っているが、それはbackgroundやimg、SVGで表現してくれってことだな。矩形でない形状を浮動化できるようにすること、Regionsとともに複雑なレイアウトを実現させることが目的か。</p>
+</dd>
+</dl>
+</section>
+
+</section>
+
+
+<section>
+<h2>Edge Effects</h2>
+<section>
+<h3><i>text-indent</i> property</h3>
+<dl>
+<dt>&lang;length&rang;</dt>
+<dd>
+<p id="ti_length">Additional spacing is applied to each word separator left in the text after the white space processing rules have been applied, and should be applied half on each side of the character unless otherwise dictated by typographic tradition.</p>
+</dd>
+</dl>
+
+<dl>
+<dt>&lang;percentage&rang;</dt>
+<dd>
+<p id="ti_percentage">Additional spacing is applied to each word separator left in the text after the white space processing rules have been applied, and should be applied half on each side of the character unless otherwise dictated by typographic tradition.</p>
+</dd>
+</dl>
+
+<dl>
+<dt>each-line</dt>
+<dd>
+<p id="ti_eachline">Additional spacing is applied to each word separator left in the text after the white space processing rules have been applied, and should be applied half on each side of the character unless otherwise dictated by typographic tradition. <br />
+Indentation affects the first line of the block container as well as each line after a forced line break, but does not affect lines after a soft wrap break.</p>
+</dd>
+</dl>
+
+<dl>
+<dt>hanging</dt>
+<dd>
+<p id="ti_hanging">Inverts which lines are affected.<br/>
+Additional spacing is applied to each word separator left in the text after the white space processing rules have been applied, and should be applied half on each side of the character unless otherwise dictated by typographic tradition.</p>
+</dd>
+</dl>
+</section>
+
+<section>
+<h3><i>hanging-punctuation</i> property</h3>
+<dl>
+<dt>first</dt>
+<dd>
+<p id="hp_first">EdgeReflowさっき使ってみた。サイトを企画しているときに説明するためのツールとしてはいいかも。
+スタイルのこまかいところは調整する必要があるけど、文字と画像を一つずつ挿入しただけで、レイアウトのスタイル関係のものすごい長いIDの宣言とかとか。いずれはドリに統合されるのか、それとも新しいオーサリングになるのか。<br/>
+microdataを学習中。情報を理解しやすく確認するだけでなく、使えるところに興味あり。googleでの資料を主に参考。その他のサイトは情報が少ないが、その分早く深いところまで探ることができる。実装してなんぼなんだけど、リッチスニペット以外の用途での利用が乏しい。<br/>
+microdataでリッチスニペットを実装しようかと思ったが、ちゃんと実装できているか検証して、かつ確実に表示したいのなら申請しないといけないみたい。スパムの問題もあるし、まだ普及段階じゃないからだろうな。</p>
+</dd>
+</dl>
+
+<dl>
+<dt>force-end</dt>
+<dd>
+<p id="hp_forceend">EdgeReflowさっき使ってみた。サイトを企画しているときに説明するためのツールとしてはいいかも。
+スタイルのこまかいところは調整する必要があるけど、文字と画像を一つずつ挿入しただけで、レイアウトのスタイル関係のものすごい長いIDの宣言とかとか。いずれはドリに統合されるのか、それとも新しいオーサリングになるのか。<br/>
+microdataを学習中。情報を理解しやすく確認するだけでなく、使えるところに興味あり。googleでの資料を主に参考。その他のサイトは情報が少ないが、その分早く深いところまで探ることができる。実装してなんぼなんだけど、リッチスニペット以外の用途での利用が乏しい。<br/>
+microdataでリッチスニペットを実装しようかと思ったが、ちゃんと実装できているか検証して、かつ確実に表示したいのなら申請しないといけないみたい。スパムの問題もあるし、まだ普及段階じゃないからだろうな。</p>
+</dd>
+</dl>
+
+<dl>
+<dt>allow-end</dt>
+<dd>
+<p id="hp_allowend">EdgeReflowさっき使ってみた。サイトを企画しているときに説明するためのツールとしてはいいかも。
+スタイルのこまかいところは調整する必要があるけど、文字と画像を一つずつ挿入しただけで、レイアウトのスタイル関係のものすごい長いIDの宣言とかとか。いずれはドリに統合されるのか、それとも新しいオーサリングになるのか。<br/>
+microdataを学習中。情報を理解しやすく確認するだけでなく、使えるところに興味あり。googleでの資料を主に参考。その他のサイトは情報が少ないが、その分早く深いところまで探ることができる。実装してなんぼなんだけど、リッチスニペット以外の用途での利用が乏しい。<br/>
+microdataでリッチスニペットを実装しようかと思ったが、ちゃんと実装できているか検証して、かつ確実に表示したいのなら申請しないといけないみたい。スパムの問題もあるし、まだ普及段階じゃないからだろうな。</p>
+</dd>
+</dl>
+
+<dl>
+<dt>last</dt>
+<dd>
+<p id="hp_last">EdgeReflowさっき使ってみた。サイトを企画しているときに説明するためのツールとしてはいいかも。
+スタイルのこまかいところは調整する必要があるけど、文字と画像を一つずつ挿入しただけで、レイアウトのスタイル関係のものすごい長いIDの宣言とかとか。いずれはドリに統合されるのか、それとも新しいオーサリングになるのか。<br/>
+microdataを学習中。情報を理解しやすく確認するだけでなく、使えるところに興味あり。googleでの資料を主に参考。その他のサイトは情報が少ないが、その分早く深いところまで探ることができる。実装してなんぼなんだけど、リッチスニペット以外の用途での利用が乏しい。<br/>
+microdataでリッチスニペットを実装しようかと思ったが、ちゃんと実装できているか検証して、かつ確実に表示したいのなら申請しないといけないみたい。スパムの問題もあるし、まだ普及段階じゃないからだろうな。</p>
+</dd>
+</dl>
+
+<dl>
+<dt>first force-end last</dt>
+<dd>
+<p id="hp_multi">EdgeReflowさっき使ってみた。サイトを企画しているときに説明するためのツールとしてはいいかも。
+スタイルのこまかいところは調整する必要があるけど、文字と画像を一つずつ挿入しただけで、レイアウトのスタイル関係のものすごい長いIDの宣言とかとか。いずれはドリに統合されるのか、それとも新しいオーサリングになるのか。<br/>
+microdataを学習中。情報を理解しやすく確認するだけでなく、使えるところに興味あり。googleでの資料を主に参考。その他のサイトは情報が少ないが、その分早く深いところまで探ることができる。実装してなんぼなんだけど、リッチスニペット以外の用途での利用が乏しい。<br/>
+microdataでリッチスニペットを実装しようかと思ったが、ちゃんと実装できているか検証して、かつ確実に表示したいのなら申請しないといけないみたい。スパムの問題もあるし、まだ普及段階じゃないからだろうな。</p>
+</dd>
+</dl>
+</section>
+</section>
+
+</article>
+<a id="vid" href="http://makotonakaguchi.github.io/" rel="Index"><img src="http://makotonakaguchi.net/images/makoto_2x.gif" width="64" alt=""></a>
+</body>
+</html>
